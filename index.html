@@ -1,998 +1,758 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fixed-Rate HELOC | Texas Tech Credit Union</title>
   <meta name="description" content="Use Your Home's Equity With Predictable Payments. This HELOC combines the flexibility of a line of credit with the predictability of a fixed-rate loan.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Plus Jakarta Sans via Adobe Typekit (exact font used on texastechfcu.org) -->
+  <link rel="stylesheet" href="https://use.typekit.net/pav8umo.css">
+
+  <!-- TTCU theme CSS — Tailwind v3 + all custom component classes -->
+  <link rel="stylesheet" href="https://www.texastechfcu.org/hubfs/hub_generated/template_assets/1/354486888132/1792163568399/template_output.min.css">
+
+  <!-- Alpine.js for navigation mega-menu -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+
   <style>
-    /* ===== RESET ===== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      color: #111827;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
-    ul { list-style: none; }
+    /* ── Scroll-reveal ─────────────────────────────────── */
+    [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+    [data-reveal].is-visible{opacity:1;transform:translateY(0)}
 
-    /* ===== TOKENS ===== */
-    :root {
-      --red:         #CC0000;
-      --red-dark:    #a30000;
-      --nav:         #1B2A40;
-      --dark:        #111827;
-      --body:        #374151;
-      --muted:       #6b7280;
-      --light:       #f9fafb;
-      --white:       #ffffff;
-      --border:      #e5e7eb;
-      --shadow:      0 4px 20px rgba(0,0,0,0.09);
-    }
+    /* ── Badge float ───────────────────────────────────── */
+    .float-soft{animation:floatSoft 5s ease-in-out infinite}
+    @keyframes floatSoft{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
-    /* ===== LAYOUT ===== */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+    /* ── Parallax layer ────────────────────────────────── */
+    .mtg-hero__stack{will-change:transform}
 
-    /* ===== BUTTONS ===== */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 30px;
-      border-radius: 6px;
-      font-size: 15px;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: background .18s, color .18s, border-color .18s, transform .12s;
-      text-decoration: none;
+    /* ── "Learn More" hover reveal on region cards ─────── */
+    .region-learn-text{
+      max-width:0;overflow:hidden;white-space:nowrap;
+      padding-left:0;opacity:0;
+      transition:max-width .3s ease,padding-left .3s ease,opacity .3s ease;
     }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-primary  { background: var(--red);   color: #fff; border-color: var(--red); }
-    .btn-primary:hover  { background: var(--red-dark); border-color: var(--red-dark); }
-    .btn-outline  { background: transparent; color: #fff; border-color: #fff; }
-    .btn-outline:hover  { background: #fff; color: var(--dark); }
-    .btn-outline-red { background: transparent; color: var(--red); border-color: var(--red); }
-    .btn-outline-red:hover { background: var(--red); color: #fff; }
-    .btn-white  { background: #fff; color: var(--red); border-color: #fff; }
-    .btn-white:hover  { background: #f0f0f0; }
-
-    /* ===== NAVIGATION ===== */
-    .nav-wrap {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background: var(--nav);
+    .group:hover .region-learn-text,
+    .group:focus-within .region-learn-text{
+      max-width:240px;padding-left:20px;opacity:1;
     }
-    .nav-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 28px;
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+    .region-learn-wrap{
+      box-shadow:none;
+      transition:box-shadow .3s ease;
     }
-    .nav-logo img { height: 38px; width: auto; }
-    .nav-logo img.invert { filter: brightness(0) invert(1); }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-    }
-    .nav-links a {
-      color: rgba(255,255,255,.82);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 8px 13px;
-      border-radius: 4px;
-      transition: background .15s, color .15s;
-    }
-    .nav-links a:hover,
-    .nav-links a.active { color: #fff; background: rgba(255,255,255,.1); }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .nav-actions a {
-      color: rgba(255,255,255,.8);
-      font-size: 13.5px;
-      font-weight: 600;
-      transition: color .15s;
-    }
-    .nav-actions a:hover { color: #fff; }
-    .nav-actions .nav-divider {
-      width: 1px; height: 18px;
-      background: rgba(255,255,255,.22);
-    }
-    .nav-actions .btn-primary { padding: 9px 18px; font-size: 13px; }
-
-    /* Mobile hamburger */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 6px;
-    }
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: #fff;
-      border-radius: 2px;
-      transition: .3s;
-    }
-    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
-
-    .mobile-menu {
-      display: none;
-      background: var(--nav);
-      border-top: 1px solid rgba(255,255,255,.1);
-      padding: 12px 28px 24px;
-    }
-    .mobile-menu.open { display: block; }
-    .mobile-menu a {
-      display: block;
-      color: rgba(255,255,255,.82);
-      font-size: 15px;
-      font-weight: 600;
-      padding: 13px 0;
-      border-bottom: 1px solid rgba(255,255,255,.07);
-      transition: color .15s;
-    }
-    .mobile-menu a:hover { color: #fff; }
-    .mobile-menu .btn { margin-top: 18px; width: 100%; justify-content: center; }
-
-    /* ===== HERO ===== */
-    .hero {
-      position: relative;
-      min-height: 580px;
-      display: flex;
-      align-items: center;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(105deg, rgba(12,18,35,.85) 0%, rgba(12,18,35,.55) 55%, rgba(12,18,35,.18) 100%);
-    }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-      padding: 90px 28px 90px 80px;
-    }
-    .hero-eyebrow {
-      display: inline-block;
-      font-size: 11.5px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--red);
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(204,0,0,.35);
-      padding: 6px 16px;
-      border-radius: 100px;
-      margin-bottom: 22px;
-    }
-    .hero-title {
-      font-size: 44px;
-      font-weight: 800;
-      color: #fff;
-      line-height: 1.18;
-      margin-bottom: 20px;
-      letter-spacing: -.5px;
-    }
-    .hero-body {
-      font-size: 17px;
-      color: rgba(255,255,255,.86);
-      margin-bottom: 38px;
-      line-height: 1.72;
-    }
-    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
-
-    /* ===== SECTION HEADER ===== */
-    .sec-head { text-align: center; margin-bottom: 56px; }
-    .sec-head h2 { font-size: 34px; font-weight: 800; color: var(--dark); margin-bottom: 12px; letter-spacing: -.3px; }
-    .sec-head p  { font-size: 18px; color: var(--muted); }
-
-    /* ===== WHY CHOOSE ===== */
-    .why-choose { padding: 84px 0; background: #fff; }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-    }
-    .feat-card {
-      background: var(--light);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 32px 28px;
-      transition: box-shadow .2s, transform .2s;
-    }
-    .feat-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
-    .feat-icon {
-      width: 54px; height: 54px;
-      background: #fff0f0;
-      border-radius: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    .feat-icon svg { width: 26px; height: 26px; stroke: var(--red); }
-    .feat-card h3 { font-size: 16.5px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
-    .feat-card p  { font-size: 14px; color: var(--body); line-height: 1.72; }
-
-    /* ===== RATE TABLE (iframe) ===== */
-    .rate-table-wrap {
-      background: #f1f5f9;
-      width: 100%;
-      line-height: 0;
-    }
-    .rate-table-wrap iframe {
-      width: 100%;
-      border: none;
-      display: block;
+    .group:hover .region-learn-wrap,
+    .group:focus-within .region-learn-wrap{
+      box-shadow:0 4px 16px rgba(0,0,0,.18);
     }
 
-    /* ===== REGIONAL TEAMS ===== */
-    .regional { padding: 84px 0; background: var(--light); }
-    .regional-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
+    /* ── Underline hover util (used in footer) ─────────── */
+    .underline-light{
+      text-decoration:underline;
+      text-decoration-color:rgba(255,255,255,.25);
+      text-underline-offset:3px;
+      transition:text-decoration-color .15s;
     }
-    .region-card {
-      background: #fff;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 12px rgba(0,0,0,.06);
-      transition: transform .2s, box-shadow .2s;
-    }
-    .region-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.12); }
-    .region-card img.region-img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-    }
-    .region-body { padding: 28px; }
-    .region-tag {
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: var(--red);
-      margin-bottom: 8px;
-    }
-    .region-body h3 { font-size: 22px; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
-    .region-body p  { font-size: 14px; color: var(--body); margin-bottom: 20px; line-height: 1.65; }
-    .region-link {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--red);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: gap .18s;
-    }
-    .region-link:hover { gap: 11px; }
+    .underline-light:hover{text-decoration-color:rgba(255,255,255,.85)}
 
-    /* ===== MEET THE TEAM ===== */
-    .meet { padding: 84px 0; background: #fff; }
-    .meet-inner {
-      display: flex;
-      align-items: center;
-      gap: 64px;
-    }
-    .meet-content { flex: 1; }
-    .meet-content h2 { font-size: 34px; font-weight: 800; color: var(--dark); margin-bottom: 16px; letter-spacing: -.3px; }
-    .meet-content p  { font-size: 16px; color: var(--body); margin-bottom: 34px; line-height: 1.72; }
-    .meet-img { flex-shrink: 0; }
-    .meet-img img { width: 280px; height: auto; border-radius: 18px; }
-
-    /* ===== HELOC PROCESS ===== */
-    .process {
-      position: relative;
-      padding: 94px 0;
-      overflow: hidden;
-    }
-    .process-bg {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-    }
-    .process-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(10,16,34,.88);
-    }
-    .process-content { position: relative; z-index: 1; }
-    .process .sec-head h2 { color: #fff; }
-    .process .sec-head p  { color: rgba(255,255,255,.68); }
-    .process-intro {
-      max-width: 660px;
-      margin: -36px auto 58px;
-      text-align: center;
-      color: rgba(255,255,255,.72);
-      font-size: 15px;
-      line-height: 1.72;
-    }
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 26px;
-    }
-    .step-card {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 14px;
-      padding: 34px;
-    }
-    .step-num {
-      width: 48px; height: 48px;
-      background: var(--red);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 20px;
-    }
-    .step-card h3 { font-size: 17.5px; font-weight: 700; color: #fff; margin-bottom: 10px; }
-    .step-card p  { font-size: 14px; color: rgba(255,255,255,.72); line-height: 1.72; }
-
-    /* ===== MOBILE APP ===== */
-    .app-section { padding: 84px 0; background: var(--light); }
-    .app-inner {
-      display: flex;
-      align-items: center;
-      gap: 60px;
-    }
-    .app-content { flex: 1; }
-    .app-content h2 { font-size: 34px; font-weight: 800; color: var(--dark); margin-bottom: 16px; letter-spacing: -.3px; }
-    .app-content p  { font-size: 16px; color: var(--body); margin-bottom: 34px; line-height: 1.72; }
-    .app-badges { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-    .app-badges a { display: block; transition: opacity .18s; }
-    .app-badges a:hover { opacity: .82; }
-    .app-badges img { height: 46px; width: auto; }
-    .app-phone { flex-shrink: 0; }
-    .app-phone img { width: 230px; height: auto; }
-
-    /* ===== FINAL CTA ===== */
-    .cta-section {
-      padding: 96px 28px;
-      background: var(--red);
-      text-align: center;
-    }
-    .cta-section h2 { font-size: 38px; font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -.4px; }
-    .cta-section p  { font-size: 17px; color: rgba(255,255,255,.88); max-width: 580px; margin: 0 auto 42px; line-height: 1.72; }
-
-    /* ===== FOOTER ===== */
-    footer { background: var(--nav); color: rgba(255,255,255,.72); }
-    .footer-main { padding: 68px 0 52px; }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2.2fr 1fr 1fr 1fr;
-      gap: 52px;
-    }
-    .footer-brand img {
-      height: 36px;
-      width: auto;
-      margin-bottom: 22px;
-      filter: brightness(0) invert(1);
-    }
-    .footer-phone {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #fff;
-      font-size: 19px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      transition: opacity .18s;
-    }
-    .footer-phone:hover { opacity: .8; }
-    .footer-phone svg { width: 16px; height: 16px; flex-shrink: 0; }
-    .footer-routing { font-size: 12.5px; color: rgba(255,255,255,.46); margin-bottom: 24px; }
-    .footer-social { display: flex; gap: 10px; }
-    .footer-social a {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.1);
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,.72);
-      transition: background .18s, color .18s;
-    }
-    .footer-social a:hover { background: var(--red); color: #fff; }
-    .footer-social svg { width: 15px; height: 15px; }
-    .footer-col h4 {
-      font-size: 12.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: #fff;
-      margin-bottom: 20px;
-    }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a { font-size: 13.5px; color: rgba(255,255,255,.62); transition: color .15s; }
-    .footer-col a:hover { color: #fff; }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,.1);
-      padding: 22px 0;
-    }
-    .footer-bottom-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .footer-bottom-inner p   { font-size: 12px; color: rgba(255,255,255,.46); }
-    .footer-legal { display: flex; gap: 18px; }
-    .footer-legal a { font-size: 12px; color: rgba(255,255,255,.46); transition: color .15s; }
-    .footer-legal a:hover { color: #fff; }
-
-    .footer-disc {
-      border-top: 1px solid rgba(255,255,255,.06);
-      padding: 18px 0;
-    }
-    .footer-disc p { font-size: 11.5px; color: rgba(255,255,255,.38); line-height: 1.6; }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 1024px) {
-      .features-grid { grid-template-columns: repeat(2, 1fr); }
-      .footer-grid   { grid-template-columns: 1fr 1fr; }
-      .footer-brand  { grid-column: 1 / -1; }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links, .nav-actions { display: none; }
-      .hamburger { display: flex; }
-
-      .hero-content { padding: 64px 28px; }
-      .hero-title   { font-size: 30px; }
-
-      .features-grid  { grid-template-columns: 1fr; }
-      .regional-grid  { grid-template-columns: 1fr; }
-
-      .meet-inner { flex-direction: column; }
-      .meet-img   { order: -1; }
-      .meet-img img { width: 100%; max-width: 300px; margin: 0 auto; }
-
-      .steps-grid { grid-template-columns: 1fr; }
-
-      .app-inner { flex-direction: column; }
-      .app-phone  { order: -1; }
-      .app-phone img { max-width: 190px; margin: 0 auto; }
-
-      .cta-section h2 { font-size: 28px; }
-
-      .sec-head h2   { font-size: 26px; }
-    }
-
-    @media (max-width: 520px) {
-      .hero-ctas { flex-direction: column; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .footer-bottom-inner { flex-direction: column; align-items: flex-start; }
-    }
+    /* ── Iframe section ────────────────────────────────── */
+    .heloc-table-section{background:#f1f5f9;width:100%;line-height:0}
+    .heloc-table-section iframe{width:100%;border:none;display:block}
   </style>
 </head>
-<body>
+<body class="bg-white text-black antialiased">
 
-<!-- ============================================================
-     NAVIGATION
-============================================================ -->
-<nav class="nav-wrap">
-  <div class="nav-inner">
-    <a href="https://www.texastechfcu.org" class="nav-logo">
-      <img
-        src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/ttcu-logo.svg"
-        alt="Texas Tech Credit Union"
-        onerror="this.src='https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/home/ttcu-logo-primary.png'; this.onerror=null;"
-        class="invert"
-      >
+<!-- ═══════════════════════════════════════════════════════
+     HEADER / NAVIGATION
+═══════════════════════════════════════════════════════ -->
+<header
+  x-data="{ open: false, mega: null }"
+  @mouseleave="mega = null"
+  @keydown.escape="mega = null; open = false"
+  @focusout="if (!$el.contains($event.relatedTarget)) mega = null"
+  :style="open ? 'z-index:730' : ''"
+  class="ttcu-header w-full z-[600] absolute top-0 left-0 right-0 text-white"
+>
+  <div class="ttcu-container max-w-[1500px] relative flex items-center justify-between gap-6 py-[10px] lg:py-[56px]">
+
+    <!-- Logo -->
+    <a href="https://www.texastechfcu.org/?hsLang=en" class="block shrink-0 lg:absolute lg:left-[19px] lg:top-[47px] lg:z-10">
+      <img src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/ttcu-logo.svg"
+           alt="Texas Tech Credit Union"
+           class="w-[106px] h-auto lg:w-[130px] xl:w-[164px]"
+           width="164" height="128" loading="eager">
     </a>
-    <div class="nav-links">
-      <a href="https://www.texastechfcu.org/checking">Bank</a>
-      <a href="https://www.texastechfcu.org/auto-loans">Borrow</a>
-      <a href="https://www.texastechfcu.org/home-loans" class="active">Mortgage</a>
-      <a href="https://www.texastechfcu.org/online-banking">Online</a>
-      <a href="https://www.texastechfcu.org/blog">Learn</a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden lg:flex items-center gap-[14px] xl:gap-[32px] lg:ml-[162px] xl:ml-[216px] mr-auto">
+      <button type="button" @mouseenter="mega='bank'" @click="mega=mega==='bank'?null:'bank'" class="flex items-center gap-[9px] text-[15px] xl:text-[16px] whitespace-nowrap font-light leading-[1.5] transition-fast opacity-90 hover:opacity-80">
+        Bank
+        <svg class="transition-fast overflow-visible" :class="mega==='bank'?'-rotate-180':''" width="6" height="3" viewBox="0 0 6 3" fill="none"><path d="M0.5 0.5L3 2.5L5.5 0.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" @mouseenter="mega='borrow'" @click="mega=mega==='borrow'?null:'borrow'" class="flex items-center gap-[9px] text-[15px] xl:text-[16px] whitespace-nowrap font-light leading-[1.5] transition-fast opacity-90 hover:opacity-80">
+        Borrow
+        <svg class="transition-fast overflow-visible" :class="mega==='borrow'?'-rotate-180':''" width="6" height="3" viewBox="0 0 6 3" fill="none"><path d="M0.5 0.5L3 2.5L5.5 0.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" @mouseenter="mega='mortgage'" @click="mega=mega==='mortgage'?null:'mortgage'" class="flex items-center gap-[9px] text-[15px] xl:text-[16px] whitespace-nowrap font-light leading-[1.5] transition-fast opacity-90 hover:opacity-80">
+        Mortgage
+        <svg class="transition-fast overflow-visible" :class="mega==='mortgage'?'-rotate-180':''" width="6" height="3" viewBox="0 0 6 3" fill="none"><path d="M0.5 0.5L3 2.5L5.5 0.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" @mouseenter="mega='online'" @click="mega=mega==='online'?null:'online'" class="flex items-center gap-[9px] text-[15px] xl:text-[16px] whitespace-nowrap font-light leading-[1.5] transition-fast opacity-90 hover:opacity-80">
+        Online
+        <svg class="transition-fast overflow-visible" :class="mega==='online'?'-rotate-180':''" width="6" height="3" viewBox="0 0 6 3" fill="none"><path d="M0.5 0.5L3 2.5L5.5 0.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" @mouseenter="mega='learn'" @click="mega=mega==='learn'?null:'learn'" class="flex items-center gap-[9px] text-[15px] xl:text-[16px] whitespace-nowrap font-light leading-[1.5] transition-fast opacity-90 hover:opacity-80">
+        Learn
+        <svg class="transition-fast overflow-visible" :class="mega==='learn'?'-rotate-180':''" width="6" height="3" viewBox="0 0 6 3" fill="none"><path d="M0.5 0.5L3 2.5L5.5 0.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <a href="https://www.texastechfcu.org/contact?hsLang=en" @mouseenter="mega=null" @focus="mega=null" class="text-[16px] font-light leading-[1.5] hover:opacity-80 transition-fast">Contact Us</a>
+    </nav>
+
+    <!-- Desktop right actions -->
+    <div class="hidden lg:flex items-center gap-[14px] xl:gap-[18px] shrink-0">
+      <a href="https://www.texastechfcu.org/online-banking?hsLang=en"
+         class="flex items-center gap-[8px] text-[15px] xl:text-[16px] font-light leading-[1.5] opacity-90 hover:opacity-70 transition-fast">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Sign In
+      </a>
+      <a href="https://www.texastechfcu.org/open-an-account?hsLang=en" class="btn-primary !text-[15px] xl:!text-[16px] lg:h-[45px] lg:px-[20px]">Open an Account</a>
+      <button class="text-white/70 hover:text-white transition-fast" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg>
+      </button>
     </div>
-    <div class="nav-actions">
-      <a href="https://www.texastechfcu.org/contact">Contact Us</a>
-      <div class="nav-divider"></div>
-      <a href="https://www.texastechfcu.org/online-banking">Sign In</a>
-      <a href="https://www.texastechfcu.org/open-an-account" class="btn btn-primary">Open an Account</a>
-    </div>
-    <button class="hamburger" id="hamBtn" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
+
+    <!-- Mobile hamburger -->
+    <button
+      type="button"
+      @click="open=!open"
+      class="lg:hidden flex flex-col gap-[5px] p-2 text-white"
+      aria-label="Toggle navigation"
+      :aria-expanded="open.toString()"
+    >
+      <span class="block w-[22px] h-[1.5px] bg-white transition-all duration-300" :class="open?'rotate-45 translate-y-[6.5px]':''"></span>
+      <span class="block w-[22px] h-[1.5px] bg-white transition-all duration-300" :class="open?'opacity-0':''"></span>
+      <span class="block w-[22px] h-[1.5px] bg-white transition-all duration-300" :class="open?'-rotate-45 -translate-y-[6.5px]':''"></span>
     </button>
   </div>
-  <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
-    <a href="https://www.texastechfcu.org/checking">Bank</a>
-    <a href="https://www.texastechfcu.org/auto-loans">Borrow</a>
-    <a href="https://www.texastechfcu.org/home-loans">Mortgage</a>
-    <a href="https://www.texastechfcu.org/online-banking">Online</a>
-    <a href="https://www.texastechfcu.org/blog">Learn</a>
-    <a href="https://www.texastechfcu.org/contact">Contact Us</a>
-    <a href="https://www.texastechfcu.org/online-banking">Sign In</a>
-    <a href="https://www.texastechfcu.org/open-an-account" class="btn btn-primary">Open an Account</a>
-  </div>
-</nav>
 
-<!-- ============================================================
+  <!-- Mobile menu -->
+  <div x-show="open" x-transition class="lg:hidden bg-black/95 border-t border-white/10 px-6 pb-6 pt-2" style="display:none">
+    <a href="https://www.texastechfcu.org/checking" class="block py-3 text-[15px] font-light text-white/85 border-b border-white/10">Bank</a>
+    <a href="https://www.texastechfcu.org/auto-loans" class="block py-3 text-[15px] font-light text-white/85 border-b border-white/10">Borrow</a>
+    <a href="https://www.texastechfcu.org/home-loans" class="block py-3 text-[15px] font-light text-white/85 border-b border-white/10">Mortgage</a>
+    <a href="https://www.texastechfcu.org/online-banking" class="block py-3 text-[15px] font-light text-white/85 border-b border-white/10">Online</a>
+    <a href="https://www.texastechfcu.org/blog" class="block py-3 text-[15px] font-light text-white/85 border-b border-white/10">Learn</a>
+    <a href="https://www.texastechfcu.org/contact" class="block py-3 text-[15px] font-light text-white/85 border-b border-white/10">Contact Us</a>
+    <a href="https://www.texastechfcu.org/online-banking" class="block py-3 text-[15px] font-light text-white/85 border-b border-white/10">Sign In</a>
+    <a href="https://www.texastechfcu.org/open-an-account" class="btn-primary mt-4 w-full justify-center">Open an Account</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════════════
      HERO
-============================================================ -->
-<section
-  class="hero"
-  style="background-image: url('https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/hero-amarillo.jpg');"
->
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <span class="hero-eyebrow">Fixed-Rate HELOC</span>
-    <h1 class="hero-title">Use Your Home's Equity With Predictable Payments</h1>
-    <p class="hero-body">This HELOC combines the flexibility of a line of credit with the predictability of a fixed-rate loan.</p>
-    <div class="hero-ctas">
-      <a href="https://www.texastechfcu.org/heloc" class="btn btn-primary" target="_blank" rel="noopener">Apply Now</a>
-      <a href="#rate-table" class="btn btn-outline">Get My Quote</a>
+═══════════════════════════════════════════════════════ -->
+<section class="ttcu-mtg-hero relative bg-white pt-0 lg:pt-[14px]">
+  <div class="ttcu-bleed px-0 lg:px-[13px]">
+    <div class="relative w-full">
+
+      <!-- Hero card -->
+      <div class="mtg-hero__card relative w-full overflow-hidden rounded-none lg:rounded-[30px] min-h-[620px] sm:min-h-[700px] lg:min-h-[772px] flex">
+
+        <img
+          src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/hero-amarillo.jpg?width=1920&name=hero-amarillo.jpg"
+          srcset="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/hero-amarillo.jpg?width=640&name=hero-amarillo.jpg 640w,
+                  https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/hero-amarillo.jpg?width=960&name=hero-amarillo.jpg 960w,
+                  https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/hero-amarillo.jpg?width=1280&name=hero-amarillo.jpg 1280w,
+                  https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/hero-amarillo.jpg?width=1920&name=hero-amarillo.jpg 1920w"
+          sizes="(min-width:1024px) 100vw, 1000px"
+          alt="A renovated kitchen in a West Texas home"
+          class="block absolute inset-0 w-full h-full object-cover object-center"
+          loading="eager">
+
+        <!-- Gradient scrims (exact from original) -->
+        <div class="mtg-hero__scrim-a absolute inset-0 pointer-events-none" style="background:linear-gradient(43.717deg,rgba(0,0,0,0.78) 21.956%,rgba(0,0,0,0) 68.163%);"></div>
+        <div class="mtg-hero__scrim-b absolute inset-0 pointer-events-none" style="background:linear-gradient(180.431deg,rgba(0,0,0,0.59) 5.3419%,rgba(0,0,0,0) 32.066%);"></div>
+
+        <!-- Copy -->
+        <div class="mtg-hero__copy relative z-10 w-full flex flex-col justify-end px-6 sm:px-10 lg:px-0 pb-[52px] lg:pt-[226px] lg:pb-[61px]">
+          <div class="mtg-hero__stack w-full" data-parallax="-0.05">
+            <div class="max-w-[660px] lg:max-w-none is-visible">
+              <p class="mtg-hero__eyebrow text-white/70 text-[13px] sm:text-[15px] lg:text-[18px] font-medium uppercase leading-[1.5] tracking-[3px] lg:tracking-[4.14px] mb-2 lg:mb-[8px]">Fixed-Rate HELOC</p>
+              <h1 class="mtg-hero__headline text-white font-light leading-[1.12] text-[42px] sm:text-[58px] lg:text-[75px] lg:max-w-[651px]">Use Your Home's Equity <strong class="font-semibold">With Predictable Payments</strong></h1>
+              <p class="mtg-hero__body text-white font-light text-[15px] sm:text-[17px] lg:text-[20px] leading-[1.5] lg:leading-[28px] mt-4 lg:mt-[20px] lg:max-w-[556px]">This HELOC combines the flexibility of a line of credit with the predictability of a fixed-rate loan.</p>
+              <div class="mtg-hero__actions flex flex-wrap gap-[12px] lg:gap-[22px] mt-7 lg:mt-[29px]">
+                <a href="https://apply.texastechfcu.org/" target="_blank" rel="noopener" class="btn-primary lg:h-[59px] lg:w-[142px] lg:px-0">Apply Now</a>
+                <a href="#rate-table" class="btn-outline-light lg:h-[59px] lg:w-[168px] lg:px-0">Get My Quote</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /hero card -->
+
+      <!-- Scroll cue -->
+      <a href="#ttcu-after-hero" aria-label="Scroll down"
+         class="mtg-hero__cue hidden lg:block absolute left-1/2 -translate-x-1/2 -bottom-[27px] z-20 rounded-full transition-fast hover:translate-y-1">
+        <svg class="size-[55px]" viewBox="0 0 55 55" fill="none" aria-hidden="true">
+          <circle cx="27.5" cy="27.5" r="27.5" fill="white"/>
+          <path d="M20 26.1742L27.45 33.6492L26.2 33.6742L33.275 26.1742V28.1742L27.3 34.5992H26.325L20 28.1742L20 26.1742ZM26.05 19.4492L27.475 19.4492L27.475 33.3242L26.05 33.3242L26.05 19.4492Z" fill="black"/>
+        </svg>
+      </a>
+
+      <!-- Floating badge -->
+      <span class="mtg-hero__badge hidden lg:block absolute z-20 pointer-events-none float-soft size-[160px] xl:size-[223px] right-[50px] xl:right-[106px] -bottom-[80px] xl:-bottom-[111px]">
+        <img src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/logo-badge.png?width=223&height=223&name=logo-badge.png"
+             alt="Texas Tech Credit Union"
+             class="block w-full h-full"
+             width="223" height="223" loading="lazy">
+      </span>
+
     </div>
   </div>
+  <span id="ttcu-after-hero" class="block h-px"></span>
 </section>
 
-<!-- ============================================================
+
+<!-- ═══════════════════════════════════════════════════════
      WHY CHOOSE A FIXED-RATE HELOC?
-============================================================ -->
-<section class="why-choose">
-  <div class="container">
-    <div class="sec-head">
-      <h2>Why Choose a Fixed-Rate HELOC?</h2>
-      <p>Flexibility and predictability in one loan.</p>
+═══════════════════════════════════════════════════════ -->
+<section class="ttcu-mtg-difference relative pt-[69px] pb-[86px] overflow-visible">
+  <div class="relative z-10 ttcu-bleed px-3 lg:px-[13px]">
+
+    <div class="text-center mx-auto max-w-[700px]" data-reveal="">
+      <h2 class="text-[32px] lg:text-[48px] font-light leading-[1.12] text-black">Why Choose a Fixed-Rate HELOC?</h2>
+      <p class="mt-[16px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black">Flexibility and predictability in one loan.</p>
     </div>
-    <div class="features-grid">
 
-      <div class="feat-card">
-        <div class="feat-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-          </svg>
-        </div>
-        <h3>Keep Your Mortgage Rate</h3>
-        <p>Borrow in a 2nd lien position and keep your current mortgage rate. Own your home free and clear? A 1st lien works too.</p>
-      </div>
+    <div class="mt-[35px] lg:mt-[37px] grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-x-[24px] md:gap-y-[19px] max-w-[1110px] mx-auto">
 
-      <div class="feat-card">
-        <div class="feat-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+      <!-- Card 1 -->
+      <article class="rounded-[30px] bg-[#f6f6f6]/[0.91] min-h-[189px] pt-[28px] md:pt-[35px] pb-[28px] md:pb-[25px] px-[28px] md:pl-[48px] md:pr-[48px]" data-reveal="" data-reveal-delay="0">
+        <div class="flex items-start gap-[15px]">
+          <svg class="shrink-0 mt-[1px] size-[29px]" viewBox="0 0 30 29.4403" fill="none" aria-hidden="true">
+            <path d="M15 28.9403C23.0081 28.9403 29.5 22.5737 29.5 14.7201C29.5 6.86658 23.0081 0.5 15 0.5C6.99187 0.5 0.5 6.86658 0.5 14.7201C0.5 22.5737 6.99187 28.9403 15 28.9403Z" stroke="#C6C7C9"/>
+            <path d="M10.5 15.9951L13.0714 19.1333L19.5 11.2877" stroke="#C6C7C9" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          <h3 class="text-[20px] lg:text-[24px] font-light leading-[1.12] text-black">Keep Your Mortgage Rate</h3>
         </div>
-        <h3>Predictable Payments</h3>
-        <p>100% of your line is funded at closing at a fixed rate, with 10, 15, 20, or 30 year terms. Enroll in autopay for a 0.25% rate discount.</p>
-      </div>
+        <p class="mt-[13px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black max-w-[446px]">Borrow in a 2nd lien position and keep your current mortgage rate. Own your home free and clear? A 1st lien works too.</p>
+      </article>
 
-      <div class="feat-card">
-        <div class="feat-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      <!-- Card 2 -->
+      <article class="rounded-[30px] bg-[#f6f6f6]/[0.91] min-h-[189px] pt-[28px] md:pt-[35px] pb-[28px] md:pb-[25px] px-[28px] md:pl-[48px] md:pr-[48px]" data-reveal="" data-reveal-delay="110">
+        <div class="flex items-start gap-[15px]">
+          <svg class="shrink-0 mt-[1px] size-[29px]" viewBox="0 0 30 29.4403" fill="none" aria-hidden="true">
+            <path d="M15 28.9403C23.0081 28.9403 29.5 22.5737 29.5 14.7201C29.5 6.86658 23.0081 0.5 15 0.5C6.99187 0.5 0.5 6.86658 0.5 14.7201C0.5 22.5737 6.99187 28.9403 15 28.9403Z" stroke="#C6C7C9"/>
+            <path d="M10.5 15.9951L13.0714 19.1333L19.5 11.2877" stroke="#C6C7C9" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          <h3 class="text-[20px] lg:text-[24px] font-light leading-[1.12] text-black">Predictable Payments</h3>
         </div>
-        <h3>Borrow $35,000 to $750,000</h3>
-        <p>Borrow up to 80% of your home's value (CLTV). Lines over $400,000 need a 760 credit score, a full appraisal, and up to 75% of your home's value.</p>
-      </div>
+        <p class="mt-[13px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black max-w-[446px]">100% of your line is funded at closing at a fixed rate, with 10, 15, 20, or 30 year terms. Enroll in autopay for a 0.25% rate discount.</p>
+      </article>
 
-      <div class="feat-card">
-        <div class="feat-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+      <!-- Card 3 -->
+      <article class="rounded-[30px] bg-[#f6f6f6]/[0.91] min-h-[189px] pt-[28px] md:pt-[35px] pb-[28px] md:pb-[25px] px-[28px] md:pl-[48px] md:pr-[48px]" data-reveal="" data-reveal-delay="220">
+        <div class="flex items-start gap-[15px]">
+          <svg class="shrink-0 mt-[1px] size-[29px]" viewBox="0 0 30 29.4403" fill="none" aria-hidden="true">
+            <path d="M15 28.9403C23.0081 28.9403 29.5 22.5737 29.5 14.7201C29.5 6.86658 23.0081 0.5 15 0.5C6.99187 0.5 0.5 6.86658 0.5 14.7201C0.5 22.5737 6.99187 28.9403 15 28.9403Z" stroke="#C6C7C9"/>
+            <path d="M10.5 15.9951L13.0714 19.1333L19.5 11.2877" stroke="#C6C7C9" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          <h3 class="text-[20px] lg:text-[24px] font-light leading-[1.12] text-black">Borrow $35,000 to $750,000</h3>
         </div>
-        <h3>Redraw for 36 Months</h3>
-        <p>Draw again ($4,000 minimum) as you pay down your balance. After 36 months, keep paying like a regular loan or renew and refinance.</p>
-      </div>
+        <p class="mt-[13px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black max-w-[446px]">Borrow up to 80% of your home's value (CLTV). Lines over $400,000 need a 760 credit score, a full appraisal, and up to 75% of your home's value.</p>
+      </article>
 
-      <div class="feat-card">
-        <div class="feat-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      <!-- Card 4 -->
+      <article class="rounded-[30px] bg-[#f6f6f6]/[0.91] min-h-[189px] pt-[28px] md:pt-[35px] pb-[28px] md:pb-[25px] px-[28px] md:pl-[48px] md:pr-[48px]" data-reveal="" data-reveal-delay="330">
+        <div class="flex items-start gap-[15px]">
+          <svg class="shrink-0 mt-[1px] size-[29px]" viewBox="0 0 30 29.4403" fill="none" aria-hidden="true">
+            <path d="M15 28.9403C23.0081 28.9403 29.5 22.5737 29.5 14.7201C29.5 6.86658 23.0081 0.5 15 0.5C6.99187 0.5 0.5 6.86658 0.5 14.7201C0.5 22.5737 6.99187 28.9403 15 28.9403Z" stroke="#C6C7C9"/>
+            <path d="M10.5 15.9951L13.0714 19.1333L19.5 11.2877" stroke="#C6C7C9" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          <h3 class="text-[20px] lg:text-[24px] font-light leading-[1.12] text-black">Redraw for 36 Months</h3>
         </div>
-        <h3>No Out-of-Pocket Costs</h3>
-        <p>The 1.99% origination fee is included in your loan amount, so there's nothing to pay upfront. No prepayment penalty, either.</p>
-      </div>
+        <p class="mt-[13px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black max-w-[446px]">Draw again ($4,000 minimum) as you pay down your balance. After 36 months, keep paying like a regular loan or renew and refinance.</p>
+      </article>
 
-      <div class="feat-card">
-        <div class="feat-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+      <!-- Card 5 -->
+      <article class="rounded-[30px] bg-[#f6f6f6]/[0.91] min-h-[189px] pt-[28px] md:pt-[35px] pb-[28px] md:pb-[25px] px-[28px] md:pl-[48px] md:pr-[48px]" data-reveal="" data-reveal-delay="440">
+        <div class="flex items-start gap-[15px]">
+          <svg class="shrink-0 mt-[1px] size-[29px]" viewBox="0 0 30 29.4403" fill="none" aria-hidden="true">
+            <path d="M15 28.9403C23.0081 28.9403 29.5 22.5737 29.5 14.7201C29.5 6.86658 23.0081 0.5 15 0.5C6.99187 0.5 0.5 6.86658 0.5 14.7201C0.5 22.5737 6.99187 28.9403 15 28.9403Z" stroke="#C6C7C9"/>
+            <path d="M10.5 15.9951L13.0714 19.1333L19.5 11.2877" stroke="#C6C7C9" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          <h3 class="text-[20px] lg:text-[24px] font-light leading-[1.12] text-black">No Out-of-Pocket Costs</h3>
         </div>
-        <h3>Check Your Options Risk-Free</h3>
-        <p>Prequalify with a soft credit pull that won't affect your score. You'll need a 600+ credit score, a DTI under 50%, and a primary residence.</p>
-      </div>
+        <p class="mt-[13px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black max-w-[446px]">The 1.99% origination fee is included in your loan amount, so there's nothing to pay upfront. No prepayment penalty, either.</p>
+      </article>
+
+      <!-- Card 6 -->
+      <article class="rounded-[30px] bg-[#f6f6f6]/[0.91] min-h-[189px] pt-[28px] md:pt-[35px] pb-[28px] md:pb-[25px] px-[28px] md:pl-[48px] md:pr-[48px]" data-reveal="" data-reveal-delay="550">
+        <div class="flex items-start gap-[15px]">
+          <svg class="shrink-0 mt-[1px] size-[29px]" viewBox="0 0 30 29.4403" fill="none" aria-hidden="true">
+            <path d="M15 28.9403C23.0081 28.9403 29.5 22.5737 29.5 14.7201C29.5 6.86658 23.0081 0.5 15 0.5C6.99187 0.5 0.5 6.86658 0.5 14.7201C0.5 22.5737 6.99187 28.9403 15 28.9403Z" stroke="#C6C7C9"/>
+            <path d="M10.5 15.9951L13.0714 19.1333L19.5 11.2877" stroke="#C6C7C9" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3 class="text-[20px] lg:text-[24px] font-light leading-[1.12] text-black">Check Your Options Risk-Free</h3>
+        </div>
+        <p class="mt-[13px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black max-w-[446px]">Prequalify with a soft credit pull that won't affect your score. You'll need a 600+ credit score, a DTI under 50%, and a primary residence.</p>
+      </article>
 
     </div>
   </div>
 </section>
 
-<!-- ============================================================
+
+<!-- ═══════════════════════════════════════════════════════
      INTERACTIVE HELOC RATE TABLE
-     (embedded above "Mortgage lending across West Texas")
-============================================================ -->
-<div id="rate-table" class="rate-table-wrap">
+     (added above "Mortgage lending across West Texas")
+═══════════════════════════════════════════════════════ -->
+<div id="rate-table" class="heloc-table-section">
   <iframe
     src="https://heloctable-nine.vercel.app/"
+    id="helocIframe"
     title="HELOC Rate Table – Compare Today's Best Rates"
     scrolling="no"
-    id="helocIframe"
     style="height:2900px;"
     loading="lazy"
     allow="clipboard-write"
   ></iframe>
 </div>
 
-<!-- ============================================================
+
+<!-- ═══════════════════════════════════════════════════════
      MORTGAGE LENDING ACROSS WEST TEXAS
-============================================================ -->
-<section class="regional">
-  <div class="container">
-    <div class="sec-head">
-      <h2>Mortgage lending across West Texas.</h2>
-      <p>A dedicated team in every market we serve.</p>
-    </div>
-    <div class="regional-grid">
+═══════════════════════════════════════════════════════ -->
+<section class="ttcu-mtg-regions relative bg-white">
+  <div class="ttcu-bleed px-3 lg:px-[13px]">
+    <div class="mtg-regions__panel rounded-[26px] lg:rounded-b-none bg-[#f6f6f6] pt-[56px] lg:pt-[76px] pb-[56px] lg:pb-[84px] px-3 lg:px-0">
 
-      <div class="region-card">
-        <img
-          class="region-img"
-          src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-amarillo.jpg"
-          alt="Amarillo mortgage team"
-          loading="lazy"
-        >
-        <div class="region-body">
-          <p class="region-tag">Panhandle</p>
-          <h3>Amarillo</h3>
-          <p>A dedicated team serving Amarillo and the surrounding Panhandle.</p>
-          <a href="https://www.texastechfcu.org/home-loans-amarillo" class="region-link" target="_blank" rel="noopener">
-            Learn More
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
-          </a>
-        </div>
+      <div class="text-center mx-auto max-w-[691px]" data-reveal="">
+        <h2 class="text-[32px] lg:text-[48px] font-light leading-[1.23] text-black">Mortgage lending across West Texas.</h2>
+        <p class="mt-[13px] mx-auto max-w-[440px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black">A dedicated team in every market we serve.</p>
       </div>
 
-      <div class="region-card">
-        <img
-          class="region-img"
-          src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-lubbock.jpg"
-          alt="Lubbock mortgage team"
-          loading="lazy"
-        >
-        <div class="region-body">
-          <p class="region-tag">South Plains</p>
-          <h3>Lubbock</h3>
-          <p>Where it all started. Fast approvals and local expertise for South Plains buyers.</p>
-          <a href="https://www.texastechfcu.org/home-loans-lubbock" class="region-link" target="_blank" rel="noopener">
-            Learn More
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
-          </a>
-        </div>
-      </div>
+      <div class="mt-[40px] lg:mt-[47px] flex flex-wrap justify-center gap-[28px] lg:gap-[14px] xl:mx-auto xl:grid xl:max-w-[1297px] xl:grid-cols-3">
 
-      <div class="region-card">
-        <img
-          class="region-img"
-          src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-midland.jpg"
-          alt="Midland mortgage team"
-          loading="lazy"
-        >
-        <div class="region-body">
-          <p class="region-tag">Permian Basin</p>
-          <h3>Midland</h3>
-          <p>Dedicated mortgage support for Midland and Permian Basin homebuyers.</p>
-          <a href="https://www.texastechfcu.org/home-loans-midland" class="region-link" target="_blank" rel="noopener">
-            Learn More
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        <!-- Amarillo -->
+        <article class="group relative flex flex-col w-full sm:w-[423px] lg:w-[423px] xl:w-full min-h-[414px] rounded-[26px] bg-white pt-[39px] pb-[16px]" data-reveal="" data-reveal-delay="0">
+          <span class="absolute top-[24px] right-[41px] inline-flex items-center gap-[12px] text-[12px] font-medium uppercase leading-[1.5] tracking-[2.76px] text-[#6b6b6b]">
+            <svg class="shrink-0 w-[10px] h-[12px]" viewBox="0 0 9.79757 11.592" fill="none" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.29757 4.77311C9.29757 7.26062 5.94369 10.2911 5.09309 11.0197C4.98042 11.1162 4.81716 11.1162 4.70449 11.0197C3.85389 10.2911 0.5 7.26062 0.5 4.77311C0.5 2.41313 2.46941 0.5 4.89879 0.5C7.32817 0.5 9.29757 2.41313 9.29757 4.77311Z" stroke="#C6C7C9" stroke-linecap="round"/>
+              <path d="M4.89901 6.15545C5.59312 6.15545 6.1558 5.59276 6.1558 4.89865C6.1558 4.20455 5.59312 3.64186 4.89901 3.64186C4.2049 3.64186 3.64221 4.20455 3.64221 4.89865C3.64221 5.59276 4.2049 6.15545 4.89901 6.15545Z" stroke="#C6C7C9" stroke-linecap="round"/>
             </svg>
-          </a>
-        </div>
-      </div>
+            panhandle
+          </span>
+          <div class="px-[28px] lg:px-[41px]">
+            <h3 class="text-[28px] lg:text-[36px] font-light leading-[1.12] text-black">
+              <a href="https://www.texastechfcu.org/home-loans-amarillo?hsLang=en" class="after:absolute after:inset-0 after:z-20 after:content-['']">Amarillo</a>
+            </h3>
+            <p class="mt-[17px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black max-w-[345px]">A dedicated team serving Amarillo and the surrounding Panhandle.</p>
+          </div>
+          <div class="mt-auto pt-[33px] px-[19px]">
+            <div class="relative">
+              <span class="region-learn-wrap absolute right-[31px] -top-[21.5px] z-10 flex h-[43px] items-center justify-end overflow-hidden rounded-full bg-white">
+                <span class="region-learn-text text-[15px] lg:text-[17px] font-light leading-[1.5] text-black">Learn More</span>
+                <svg class="shrink-0 size-[43px]" viewBox="0 0 43 43" fill="none" aria-hidden="true">
+                  <path d="M26.142 26.3443L26.1597 15.7907L27.0613 16.657L16.7552 16.9575L18.1694 15.5433L26.9375 15.2251L27.6269 15.9145L27.5562 24.9301L26.142 26.3443ZM17.1087 26.8216L16.1011 25.814L25.9122 16.0029L26.9198 17.0105L17.1087 26.8216Z" fill="black"/>
+                </svg>
+              </span>
+              <img src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-amarillo.jpg?width=800&name=region-loan-amarillo.jpg"
+                   srcset="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-amarillo.jpg?width=480&name=region-loan-amarillo.jpg 480w,
+                           https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-amarillo.jpg?width=800&name=region-loan-amarillo.jpg 800w"
+                   alt="A Texas Tech Credit Union loan officer with a member"
+                   class="block w-full h-[200px] lg:h-[218px] object-cover object-center rounded-[20px]" loading="lazy">
+            </div>
+          </div>
+        </article>
 
+        <!-- Lubbock -->
+        <article class="group relative flex flex-col w-full sm:w-[423px] lg:w-[423px] xl:w-full min-h-[414px] rounded-[26px] bg-white pt-[39px] pb-[16px]" data-reveal="" data-reveal-delay="140">
+          <span class="absolute top-[24px] right-[41px] inline-flex items-center gap-[12px] text-[12px] font-medium uppercase leading-[1.5] tracking-[2.76px] text-[#6b6b6b]">
+            <svg class="shrink-0 w-[10px] h-[12px]" viewBox="0 0 9.79757 11.592" fill="none" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.29757 4.77311C9.29757 7.26062 5.94369 10.2911 5.09309 11.0197C4.98042 11.1162 4.81716 11.1162 4.70449 11.0197C3.85389 10.2911 0.5 7.26062 0.5 4.77311C0.5 2.41313 2.46941 0.5 4.89879 0.5C7.32817 0.5 9.29757 2.41313 9.29757 4.77311Z" stroke="#C6C7C9" stroke-linecap="round"/>
+              <path d="M4.89901 6.15545C5.59312 6.15545 6.1558 5.59276 6.1558 4.89865C6.1558 4.20455 5.59312 3.64186 4.89901 3.64186C4.2049 3.64186 3.64221 4.20455 3.64221 4.89865C3.64221 5.59276 4.2049 6.15545 4.89901 6.15545Z" stroke="#C6C7C9" stroke-linecap="round"/>
+            </svg>
+            south plains
+          </span>
+          <div class="px-[28px] lg:px-[41px]">
+            <h3 class="text-[28px] lg:text-[36px] font-light leading-[1.12] text-black">
+              <a href="https://www.texastechfcu.org/home-loans-lubbock?hsLang=en" class="after:absolute after:inset-0 after:z-20 after:content-['']">Lubbock</a>
+            </h3>
+            <p class="mt-[17px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black max-w-[345px]">Where it all started. Fast approvals and local expertise for South Plains buyers.</p>
+          </div>
+          <div class="mt-auto pt-[33px] px-[19px]">
+            <div class="relative">
+              <span class="region-learn-wrap absolute right-[31px] -top-[21.5px] z-10 flex h-[43px] items-center justify-end overflow-hidden rounded-full bg-white">
+                <span class="region-learn-text text-[15px] lg:text-[17px] font-light leading-[1.5] text-black">Learn More</span>
+                <svg class="shrink-0 size-[43px]" viewBox="0 0 43 43" fill="none" aria-hidden="true">
+                  <path d="M26.142 26.3443L26.1597 15.7907L27.0613 16.657L16.7552 16.9575L18.1694 15.5433L26.9375 15.2251L27.6269 15.9145L27.5562 24.9301L26.142 26.3443ZM17.1087 26.8216L16.1011 25.814L25.9122 16.0029L26.9198 17.0105L17.1087 26.8216Z" fill="black"/>
+                </svg>
+              </span>
+              <img src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-lubbock.jpg?width=800&name=region-loan-lubbock.jpg"
+                   srcset="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-lubbock.jpg?width=480&name=region-loan-lubbock.jpg 480w,
+                           https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-lubbock.jpg?width=800&name=region-loan-lubbock.jpg 800w"
+                   alt="A Texas Tech Credit Union loan officer with a member"
+                   class="block w-full h-[200px] lg:h-[218px] object-cover object-center rounded-[20px]" loading="lazy">
+            </div>
+          </div>
+        </article>
+
+        <!-- Midland -->
+        <article class="group relative flex flex-col w-full sm:w-[423px] lg:w-[423px] xl:w-full min-h-[414px] rounded-[26px] bg-white pt-[39px] pb-[16px]" data-reveal="" data-reveal-delay="280">
+          <span class="absolute top-[24px] right-[41px] inline-flex items-center gap-[12px] text-[12px] font-medium uppercase leading-[1.5] tracking-[2.76px] text-[#6b6b6b]">
+            <svg class="shrink-0 w-[10px] h-[12px]" viewBox="0 0 9.79757 11.592" fill="none" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.29757 4.77311C9.29757 7.26062 5.94369 10.2911 5.09309 11.0197C4.98042 11.1162 4.81716 11.1162 4.70449 11.0197C3.85389 10.2911 0.5 7.26062 0.5 4.77311C0.5 2.41313 2.46941 0.5 4.89879 0.5C7.32817 0.5 9.29757 2.41313 9.29757 4.77311Z" stroke="#C6C7C9" stroke-linecap="round"/>
+              <path d="M4.89901 6.15545C5.59312 6.15545 6.1558 5.59276 6.1558 4.89865C6.1558 4.20455 5.59312 3.64186 4.89901 3.64186C4.2049 3.64186 3.64221 4.20455 3.64221 4.89865C3.64221 5.59276 4.2049 6.15545 4.89901 6.15545Z" stroke="#C6C7C9" stroke-linecap="round"/>
+            </svg>
+            permian basin
+          </span>
+          <div class="px-[28px] lg:px-[41px]">
+            <h3 class="text-[28px] lg:text-[36px] font-light leading-[1.12] text-black">
+              <a href="https://www.texastechfcu.org/home-loans-midland?hsLang=en" class="after:absolute after:inset-0 after:z-20 after:content-['']">Midland</a>
+            </h3>
+            <p class="mt-[17px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black max-w-[345px]">Dedicated mortgage support for Midland and Permian Basin homebuyers.</p>
+          </div>
+          <div class="mt-auto pt-[33px] px-[19px]">
+            <div class="relative">
+              <span class="region-learn-wrap absolute right-[31px] -top-[21.5px] z-10 flex h-[43px] items-center justify-end overflow-hidden rounded-full bg-white">
+                <span class="region-learn-text text-[15px] lg:text-[17px] font-light leading-[1.5] text-black">Learn More</span>
+                <svg class="shrink-0 size-[43px]" viewBox="0 0 43 43" fill="none" aria-hidden="true">
+                  <path d="M26.142 26.3443L26.1597 15.7907L27.0613 16.657L16.7552 16.9575L18.1694 15.5433L26.9375 15.2251L27.6269 15.9145L27.5562 24.9301L26.142 26.3443ZM17.1087 26.8216L16.1011 25.814L25.9122 16.0029L26.9198 17.0105L17.1087 26.8216Z" fill="black"/>
+                </svg>
+              </span>
+              <img src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-midland.jpg?width=800&name=region-loan-midland.jpg"
+                   srcset="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-midland.jpg?width=480&name=region-loan-midland.jpg 480w,
+                           https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/region-loan-midland.jpg?width=800&name=region-loan-midland.jpg 800w"
+                   alt="A Texas Tech Credit Union loan officer with a member"
+                   class="block w-full h-[200px] lg:h-[218px] object-cover object-center rounded-[20px]" loading="lazy">
+            </div>
+          </div>
+        </article>
+
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     MEET THE TEAM
-============================================================ -->
-<section class="meet">
-  <div class="container">
-    <div class="meet-inner">
-      <div class="meet-content">
-        <h2>Get to know your local mortgage team.</h2>
-        <p>Our loan officers know this market and are ready to guide you from application to closing.</p>
-        <a href="https://www.texastechfcu.org/meet-the-mortgage-team" class="btn btn-outline-red" target="_blank" rel="noopener">Meet the Team</a>
+
+<!-- ═══════════════════════════════════════════════════════
+     MEET THE TEAM (dark app bar)
+═══════════════════════════════════════════════════════ -->
+<section class="ttcu-mtg-app-bar relative z-10">
+  <div class="ttcu-bleed px-3 lg:px-[13px]">
+    <div class="mx-auto max-w-[1298px] min-h-[193px] rounded-[30px] border border-[#c6c7c9] bg-[#0c0203]
+                flex flex-col lg:flex-row lg:items-center lg:justify-between gap-[24px]
+                px-[28px] lg:pl-[73px] py-[36px] lg:py-[38px] lg:pr-[83px]" data-reveal="">
+      <div class="lg:max-w-[778px]">
+        <h2 class="text-[26px] lg:text-[36px] font-light leading-[1.23] text-white">Get to know your local mortgage team.</h2>
+        <p class="mt-[11px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-white">Our loan officers know this market and are ready to guide you from application to closing.</p>
       </div>
-      <div class="meet-img">
-        <img
-          src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/logo-badge.png"
-          alt="Texas Tech Credit Union Mortgage"
-          loading="lazy"
-        >
-      </div>
+      <a href="https://www.texastechfcu.org/meet-the-mortgage-team?hsLang=en" class="btn-primary shrink-0 lg:h-[59px] lg:px-[26px]">Meet the Team</a>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
+
+<!-- ═══════════════════════════════════════════════════════
      THE HELOC PROCESS
-============================================================ -->
-<section class="process">
-  <div
-    class="process-bg"
-    style="background-image: url('https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/steps-bg-loan.jpg');"
-  ></div>
-  <div class="process-overlay"></div>
-  <div class="process-content">
-    <div class="container">
-      <div class="sec-head">
-        <h2>The HELOC process</h2>
-        <p>Your HELOC Loan step by step.</p>
-      </div>
-      <p class="process-intro">
-        There are some required waiting periods, and we'll guide you through each one.
-        Plan on a few weeks from application to funding.
-      </p>
-      <div class="steps-grid">
+═══════════════════════════════════════════════════════ -->
+<section class="ttcu-mtg-steps bg-white mt-[12px] lg:-mt-[30px]">
+  <div class="ttcu-bleed px-3 lg:px-[13px]">
+    <div class="mtg-steps__panel relative overflow-hidden rounded-[30px] pt-[40px] lg:pt-[56px] pb-[40px] lg:pb-[55px]">
 
-        <div class="step-card">
-          <div class="step-num">1</div>
-          <h3>Prequalify Online</h3>
-          <p>Apply online and see what you prequalify for with a soft credit pull. Checking your options won't affect your credit score.</p>
+      <!-- Background image -->
+      <img src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/steps-bg-loan.jpg?width=1920&name=steps-bg-loan.jpg"
+           srcset="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/steps-bg-loan.jpg?width=640&name=steps-bg-loan.jpg 640w,
+                   https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/steps-bg-loan.jpg?width=960&name=steps-bg-loan.jpg 960w,
+                   https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/steps-bg-loan.jpg?width=1920&name=steps-bg-loan.jpg 1920w"
+           sizes="(min-width:1024px) 100vw, 1000px"
+           alt="" class="block absolute inset-0 w-full h-full object-cover object-center" loading="lazy">
+
+      <!-- Gradient overlay -->
+      <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(71.757deg,rgba(0,0,0,0.63) 34.884%,rgba(0,0,0,0) 55.792%);"></div>
+      <div class="mtg-steps__shade absolute inset-0 pointer-events-none bg-black/[0.68]"></div>
+
+      <!-- Glass card -->
+      <div class="mtg-steps__glass relative mx-auto w-[calc(100%-28px)] lg:w-[calc(100%-116px)] max-w-[1298px] rounded-[30px] bg-white/[0.0702] pt-[36px] pb-[36px] px-[24px] lg:pl-[79px] lg:pr-[68px] lg:pt-[56px] lg:pb-[56px]">
+        <div class="grid grid-cols-1 lg:grid-cols-[412fr_615fr] gap-y-[36px] lg:gap-x-[124px]">
+
+          <!-- Left: headline + photo -->
+          <div class="flex flex-col">
+            <p class="text-white/70 text-[13px] lg:text-[18px] font-medium uppercase leading-[1.5] tracking-[3px] lg:tracking-[4.14px]">The HELOC process</p>
+            <h2 class="mt-[8px] text-[32px] lg:text-[48px] font-light leading-[1.12] text-white">Your HELOC Loan step by step.</h2>
+            <p class="mt-[15px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-white max-w-[412px]">There are some required waiting periods, and we'll guide you through each one. Plan on a few weeks from application to funding.</p>
+            <div class="mtg-steps__photo mt-[36px] lg:mb-[6px] lg:flex-1 lg:min-h-0 lg:mt-[60px]">
+              <img src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/steps-construction.jpg?width=1200&name=steps-construction.jpg"
+                   srcset="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/steps-construction.jpg?width=480&name=steps-construction.jpg 480w,
+                           https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/steps-construction.jpg?width=800&name=steps-construction.jpg 800w,
+                           https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/mortgage/steps-construction.jpg?width=1200&name=steps-construction.jpg 1200w"
+                   alt="" class="block w-full h-[280px] lg:h-full rounded-[20px] object-cover object-[50%_20%] lg:object-center" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Right: 4 steps -->
+          <div>
+
+            <div data-reveal="" data-reveal-delay="0">
+              <p class="text-white/70 text-[12px] font-medium uppercase leading-[1.5] tracking-[2.76px]">step 1</p>
+              <h3 class="mt-[8px] text-[20px] lg:text-[24px] font-bold leading-[1.31] text-white">Prequalify Online</h3>
+              <p class="mt-[4px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-white">Apply online and see what you prequalify for with a soft credit pull. Checking your options won't affect your credit score.</p>
+            </div>
+            <div class="mt-[37px] h-px w-full bg-white/[0.34]"></div>
+
+            <div class="mt-[36px]" data-reveal="" data-reveal-delay="150">
+              <p class="text-white/70 text-[12px] font-medium uppercase leading-[1.5] tracking-[2.76px]">step 2</p>
+              <h3 class="mt-[8px] text-[20px] lg:text-[24px] font-bold leading-[1.31] text-white">Upload Your Documents</h3>
+              <p class="mt-[4px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-white">Download the Texas Tech Credit Union mortgage app to securely upload your documents and track your progress.</p>
+              <div class="mt-[17px] flex flex-wrap items-center gap-[10px]">
+                <!-- App Store -->
+                <a href="https://apps.apple.com/us/app/texas-tech-cu-mortgage/id1499565379" target="_blank" rel="noopener" aria-label="Download on the App Store"
+                   class="relative block w-[124px] h-[42px] bg-white border border-black rounded-[6px] overflow-hidden transition-fast hover:-translate-y-0.5 hover:shadow-md"
+                   style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;">
+                  <img src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/badge-apple.svg" alt="" class="block absolute left-[7px] top-[8px] w-[20px] h-[24px]">
+                  <span class="absolute left-[36px] top-1/2 -translate-y-1/2 text-black">
+                    <span class="block text-[9px] leading-[9px] font-medium whitespace-nowrap">Download on the</span>
+                    <span class="block text-[18px] leading-none font-medium tracking-[-0.47px] whitespace-nowrap">App Store</span>
+                  </span>
+                </a>
+                <!-- Google Play -->
+                <a href="https://play.google.com/store/apps/details?id=com.simplenexus.loans.client.s__51950" target="_blank" rel="noopener" aria-label="Get it on Google Play"
+                   class="relative block w-[124px] h-[42px] bg-white border border-black rounded-[6px] overflow-hidden transition-fast hover:-translate-y-0.5 hover:shadow-md"
+                   style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;">
+                  <img src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/badge-playstore.svg" alt="" class="block absolute left-[7px] top-[8px] w-[21px] h-[24px]">
+                  <span class="absolute left-[36px] top-[5px] block">
+                    <span class="block text-[10px] leading-none uppercase text-black">Get it on</span>
+                    <img src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/badge-gplay-text.svg" alt="Google Play" class="block w-[74px] h-[15px] mt-[3px]">
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div class="mt-[37px] h-px w-full bg-white/[0.34]"></div>
+
+            <div class="mt-[36px]" data-reveal="" data-reveal-delay="300">
+              <p class="text-white/70 text-[12px] font-medium uppercase leading-[1.5] tracking-[2.76px]">step 3</p>
+              <h3 class="mt-[8px] text-[20px] lg:text-[24px] font-bold leading-[1.31] text-white">Complete the Texas Review Period</h3>
+              <p class="mt-[4px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-white">Texas requires a 12-day cooling-off period after you receive your disclosures, plus a 7-day attorney review of your documents. We schedule around both, so you only see eligible notary dates.</p>
+            </div>
+            <div class="mt-[37px] h-px w-full bg-white/[0.34]"></div>
+
+            <div class="mt-[36px]" data-reveal="" data-reveal-delay="450">
+              <p class="text-white/70 text-[12px] font-medium uppercase leading-[1.5] tracking-[2.76px]">step 4</p>
+              <h3 class="mt-[8px] text-[20px] lg:text-[24px] font-bold leading-[1.31] text-white">Sign In Person and Get Your Funds</h3>
+              <p class="mt-[4px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-white">Sign your documents in person at an authorized recording office (bring your phone or tablet to e-sign). After a 3-day rescission period, 100% of your line is deposited to your account.</p>
+            </div>
+
+          </div>
         </div>
-
-        <div class="step-card">
-          <div class="step-num">2</div>
-          <h3>Upload Your Documents</h3>
-          <p>Use the Texas Tech Credit Union mortgage app to securely upload all required documents and track your loan status in real time from your phone.</p>
-        </div>
-
-        <div class="step-card">
-          <div class="step-num">3</div>
-          <h3>Complete the Texas Review Period</h3>
-          <p>Texas requires a 12-day cooling-off period after you receive your disclosures, plus a 7-day attorney review of your documents. We schedule around both, so you only see eligible notary dates.</p>
-        </div>
-
-        <div class="step-card">
-          <div class="step-num">4</div>
-          <h3>Sign In Person and Get Your Funds</h3>
-          <p>Sign your documents in person at an authorized recording office (bring your phone or tablet to e-sign). After a 3-day rescission period, 100% of your line is deposited to your account.</p>
-        </div>
-
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     MOBILE APP
-============================================================ -->
-<section class="app-section">
-  <div class="container">
-    <div class="app-inner">
-      <div class="app-content">
-        <h2>Manage your mortgage from anywhere.</h2>
-        <p>Stay on top of every step with the Texas Tech Credit Union mortgage app. Upload documents, check your status, and connect with your team on the go.</p>
-        <div class="app-badges">
-          <a href="https://apps.apple.com/us/app/texas-tech-cu-mortgage/id1499565379" target="_blank" rel="noopener" aria-label="Download on the App Store">
-            <img
-              src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/badge-apple.svg"
-              alt="App Store"
-              loading="lazy"
-            >
-          </a>
-          <a href="https://play.google.com/store/apps/details?id=com.simplenexus.loans.client.s__51950" target="_blank" rel="noopener" aria-label="Get it on Google Play">
-            <img
-              src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/badge-playstore.svg"
-              alt="Google Play"
-              loading="lazy"
-            >
-          </a>
-        </div>
+
+<!-- ═══════════════════════════════════════════════════════
+     MANAGE MORTGAGE FROM ANYWHERE (app bar)
+═══════════════════════════════════════════════════════ -->
+<section class="ttcu-mtg-app-bar relative z-10 mt-[12px]">
+  <div class="ttcu-bleed px-3 lg:px-[13px]">
+    <div class="mx-auto max-w-[1298px] min-h-[193px] rounded-[30px] border border-[#c6c7c9] bg-[#0c0203]
+                flex flex-col lg:flex-row lg:items-center lg:justify-between gap-[24px]
+                px-[28px] lg:pl-[73px] py-[36px] lg:py-[38px] lg:pr-[73px]" data-reveal="">
+      <div class="lg:max-w-[778px]">
+        <h2 class="text-[26px] lg:text-[36px] font-light leading-[1.23] text-white">Manage your mortgage from anywhere.</h2>
+        <p class="mt-[11px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-white">Stay on top of every step with the Texas Tech Credit Union mortgage app. Upload documents, check your status, and connect with your team on the go.</p>
       </div>
-      <div class="app-phone">
-        <img
-          src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/online-banking/app-phone.png"
-          alt="TTCU Mortgage App on iPhone"
-          loading="lazy"
-        >
+      <div class="shrink-0 flex flex-wrap items-center gap-[10px] lg:h-[42px]">
+        <a href="https://apps.apple.com/us/app/texas-tech-cu-mortgage/id1499565379" target="_blank" rel="noopener" aria-label="Download on the App Store"
+           class="relative block w-[124px] h-[42px] bg-white border border-black rounded-[6px] overflow-hidden transition-fast hover:-translate-y-0.5 hover:shadow-md"
+           style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;">
+          <img src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/badge-apple.svg" alt="" class="block absolute left-[7px] top-[8px] w-[20px] h-[24px]">
+          <span class="absolute left-[36px] top-1/2 -translate-y-1/2 text-black text-left">
+            <span class="block text-[9px] leading-[9px] font-medium whitespace-nowrap">Download on the</span>
+            <span class="block text-[18px] leading-none font-medium tracking-[-0.47px] whitespace-nowrap">App Store</span>
+          </span>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.simplenexus.loans.client.s__51950" target="_blank" rel="noopener" aria-label="Get it on Google Play"
+           class="relative block w-[124px] h-[42px] bg-white border border-black rounded-[6px] overflow-hidden transition-fast hover:-translate-y-0.5 hover:shadow-md"
+           style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;">
+          <img src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/badge-playstore.svg" alt="" class="block absolute left-[7px] top-[8px] w-[21px] h-[24px]">
+          <span class="absolute left-[36px] top-[5px] block text-left">
+            <span class="block text-[10px] leading-none uppercase text-black">Get it on</span>
+            <img src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/badge-gplay-text.svg" alt="Google Play" class="block w-[74px] h-[15px] mt-[3px]">
+          </span>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     FINAL CTA
-============================================================ -->
-<section class="cta-section">
-  <h2>Ready to Put Your Equity to Work?</h2>
-  <p>Explore a Fixed-Rate HELOC with a local loan officer who can walk you through your options and get you to closing day.</p>
-  <a href="https://www.texastechfcu.org/heloc" class="btn btn-white" target="_blank" rel="noopener">Apply Now</a>
+
+<!-- ═══════════════════════════════════════════════════════
+     READY TO PUT YOUR EQUITY TO WORK (CTA)
+═══════════════════════════════════════════════════════ -->
+<section class="ttcu-mtg-cta relative z-10 mt-[12px] lg:-mt-[205px]">
+  <div class="ttcu-bleed px-3 lg:px-[13px]">
+    <div class="mx-auto max-w-[1031px] rounded-[30px] border border-black/[0.23] bg-white/90 text-center px-6 lg:px-[100px] pt-[48px] lg:pt-[82px] pb-[48px] lg:pb-[79px]" data-reveal="">
+      <h2 class="mx-auto max-w-[631px] text-[30px] lg:text-[48px] font-light leading-[1.12] text-black">Ready to Put Your Equity to Work?</h2>
+      <p class="mx-auto mt-[14px] lg:mt-[16px] max-w-[618px] text-[15px] lg:text-[17px] font-light leading-[1.5] text-black">Explore a Fixed-Rate HELOC with a local loan officer who can walk you through your options and get you to closing day.</p>
+      <div class="mt-[26px] lg:mt-[34px] flex flex-wrap items-center justify-center gap-[14px] lg:gap-[25px]">
+        <a href="https://apply.texastechfcu.org/" class="btn-primary lg:h-[59px] lg:w-[159px] lg:px-0">Apply Now</a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ============================================================
+</main>
+
+
+<!-- ═══════════════════════════════════════════════════════
      FOOTER
-============================================================ -->
-<footer>
-  <div class="footer-main">
-    <div class="container">
-      <div class="footer-grid">
+═══════════════════════════════════════════════════════ -->
+<footer class="ttcu-footer relative bg-white px-0 pt-[96px] lg:pt-0 lg:px-[13px] lg:pb-[13px]">
+  <div class="relative bg-[#0e0e0e] lg:bg-black text-white lg:rounded-[30px]">
 
-        <!-- Brand -->
-        <div class="footer-brand">
-          <img
-            src="https://www.texastechfcu.org/hubfs/raw_assets/public/website-theme/images/home/ttcu-logo.svg"
-            alt="Texas Tech Credit Union"
-          >
-          <a href="tel:+18067423606" class="footer-phone">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-            </svg>
-            (806) 742-3606
-          </a>
-          <p class="footer-routing">Routing Number: 311386073</p>
-          <div class="footer-social">
-            <a href="https://www.facebook.com/TexasTechCU" target="_blank" rel="noopener" aria-label="Facebook">
-              <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
-              </svg>
-            </a>
-            <a href="https://www.instagram.com/texastechcu/" target="_blank" rel="noopener" aria-label="Instagram">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-linecap="round"/>
-              </svg>
-            </a>
-            <a href="https://twitter.com/TexasTechCU" target="_blank" rel="noopener" aria-label="Twitter / X">
-              <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </a>
-            <a href="https://www.linkedin.com/company/TexasTechCU" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
-                <circle cx="4" cy="4" r="2"/>
-              </svg>
-            </a>
-            <a href="https://www.youtube.com/texastechcu" target="_blank" rel="noopener" aria-label="YouTube">
-              <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/>
-                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/>
-              </svg>
-            </a>
-            <a href="https://www.tiktok.com/@texastechcu" target="_blank" rel="noopener" aria-label="TikTok">
-              <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.54V6.78a4.85 4.85 0 01-1.01-.09z"/>
-              </svg>
-            </a>
+    <!-- Mobile logo bubble -->
+    <div class="lg:hidden absolute z-[40] left-1/2 -translate-x-1/2 -top-[71px] size-[183px] rounded-full bg-white border border-black/10 overflow-hidden grid place-items-center pointer-events-none" aria-hidden="true">
+      <img src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/home/ttcu-logo-primary.png?width=494&height=374&name=ttcu-logo-primary.png"
+           alt="" width="494" height="374" class="w-[140px] h-auto" loading="lazy">
+    </div>
+
+    <div class="ttcu-container w-[calc(100%-48px)] lg:w-full lg:max-w-none pt-[116px] pb-[22px] lg:pt-[74px] lg:pb-[40px] lg:pl-[73px] lg:pr-[58px]">
+      <div class="grid grid-cols-2 lg:grid-cols-[44.6%_21.7%_15.9%_1fr] gap-x-[16px] gap-y-[30px] lg:gap-0">
+
+        <!-- Brand column -->
+        <div class="col-span-2 lg:col-span-1 text-center lg:text-left mb-[12px] lg:mb-0">
+          <div class="hidden lg:inline-block rounded-[20px] bg-white px-[16px] py-[14px] mb-[23px]">
+            <img src="https://www.texastechfcu.org/hs-fs/hubfs/raw_assets/public/website-theme/images/home/ttcu-logo-primary.png?width=494&height=374&name=ttcu-logo-primary.png"
+                 alt="Texas Tech Credit Union" width="494" height="374" class="block w-[184px] h-auto" loading="lazy">
+          </div>
+          <div class="text-[13px] lg:text-[14px] text-white leading-[1.6] lg:leading-[1.73] font-light">
+            <p class="mb-0"><a href="tel:+18067423606" class="inline-block py-[4px] lg:py-0 underline-light hover:text-white transition-fast">(806) 742-3606</a></p>
+            <p class="mb-0">Routing Number: 311386073</p>
           </div>
         </div>
 
-        <!-- Products & Services -->
-        <div class="footer-col">
-          <h4>Products + Services</h4>
-          <ul>
-            <li><a href="https://www.texastechfcu.org/spend-plus">Spend+ Cashback Account</a></li>
-            <li><a href="https://www.texastechfcu.org/save">Save Account</a></li>
-            <li><a href="https://www.texastechfcu.org/cd">Certificate of Deposit (CD)</a></li>
-            <li><a href="https://www.texastechfcu.org/money-market">Money Market Account</a></li>
-            <li><a href="https://www.texastechfcu.org/home-loans">Home Loans</a></li>
-            <li><a href="https://www.texastechfcu.org/auto-loans">Auto Loans</a></li>
-            <li><a href="https://www.texastechfcu.org/personal-loans">Personal Loans</a></li>
-            <li><a href="https://www.texastechfcu.org/skip-a-pay">Skip-A-Pay</a></li>
+        <!-- Products + Services -->
+        <div class="lg:pt-[32px]">
+          <p class="text-[12px] lg:text-[10px] tracking-[0.72px] lg:tracking-[2.1px] uppercase text-[#8a8a8a] lg:text-white/50 mb-[14px] lg:mb-[13px] leading-[1.73]">Products + Services</p>
+          <ul class="space-y-3 lg:space-y-0 text-[13px] lg:text-[14px] font-light text-white leading-[1.5] lg:leading-[2.16]">
+            <li><a href="https://www.texastechfcu.org/spend-plus?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Spend+ Cashback Account</a></li>
+            <li><a href="https://www.texastechfcu.org/save?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Save Account</a></li>
+            <li><a href="https://www.texastechfcu.org/cd?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Certificate of Deposit (CD)</a></li>
+            <li><a href="https://www.texastechfcu.org/money-market?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Money Market Account</a></li>
+            <li><a href="https://www.texastechfcu.org/home-loans?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Home Loans</a></li>
+            <li><a href="https://www.texastechfcu.org/auto-loans?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Auto Loans</a></li>
+            <li><a href="https://www.texastechfcu.org/personal-loans?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Personal Loans</a></li>
+            <li><a href="https://www.texastechfcu.org/skip-a-pay?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Skip-A-Pay</a></li>
           </ul>
         </div>
 
         <!-- Resources -->
-        <div class="footer-col">
-          <h4>Resources</h4>
-          <ul>
-            <li><a href="https://www.texastechfcu.org/rates">Rates</a></li>
-            <li><a href="https://www.texastechfcu.org/support">Support Center</a></li>
-            <li><a href="https://www.texastechfcu.org/contact">Contact Us</a></li>
-            <li><a href="https://www.texastechfcu.org/locations">Locations + ATM</a></li>
-            <li><a href="https://www.texastechfcu.org/blog">Blog</a></li>
-            <li><a href="https://www.texastechfcu.org/ncua">NCUA Insurance</a></li>
+        <div class="lg:pt-[32px]">
+          <p class="text-[12px] lg:text-[10px] tracking-[0.72px] lg:tracking-[2.1px] uppercase text-[#8a8a8a] lg:text-white/50 mb-[14px] lg:mb-[13px] leading-[1.73]">Resources</p>
+          <ul class="space-y-3 lg:space-y-0 text-[13px] lg:text-[14px] font-light text-white leading-[1.5] lg:leading-[2.16]">
+            <li><a href="https://www.texastechfcu.org/rates?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Rates</a></li>
+            <li><a href="https://www.texastechfcu.org/support?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Support Center</a></li>
+            <li><a href="https://www.texastechfcu.org/contact?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Contact Us</a></li>
+            <li><a href="https://www.texastechfcu.org/locations?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Locations + ATM</a></li>
+            <li><a href="https://www.texastechfcu.org/blog?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Blog</a></li>
+            <li><a href="https://www.texastechfcu.org/ncua?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">NCUA Insurance</a></li>
           </ul>
         </div>
 
-        <!-- About -->
-        <div class="footer-col">
-          <h4>About</h4>
-          <ul>
-            <li><a href="https://www.texastechfcu.org/about">About</a></li>
-            <li><a href="https://www.texastechfcu.org/careers">Careers</a></li>
-            <li><a href="https://www.texastechfcu.org/financials">Financial Reports</a></li>
+        <!-- About + Social -->
+        <div class="lg:pt-[32px]">
+          <p class="text-[12px] lg:text-[10px] tracking-[0.72px] lg:tracking-[2.1px] uppercase text-[#8a8a8a] lg:text-white/50 mb-[14px] lg:mb-[13px] leading-[1.73]">About</p>
+          <ul class="space-y-3 lg:space-y-0 text-[13px] lg:text-[14px] font-light text-white leading-[1.5] lg:leading-[2.16]">
+            <li><a href="https://www.texastechfcu.org/about?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">About</a></li>
+            <li><a href="https://www.texastechfcu.org/careers?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Careers</a></li>
+            <li><a href="https://www.texastechfcu.org/financials?hsLang=en" class="w-fit underline-light hover:text-white transition-fast">Financial Reports</a></li>
           </ul>
+          <!-- Social (desktop) -->
+          <div class="hidden lg:block">
+            <p class="text-[10px] tracking-[2.1px] uppercase text-white/50 mt-[59px] mb-[20px] leading-[1.73]">Follow Us</p>
+            <div class="flex flex-wrap items-center gap-4">
+              <a href="https://www.facebook.com/TexasTechCU" target="_blank" rel="noopener" aria-label="facebook" class="text-white hover:text-white/80 transition-fast"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.5V12h2.7l-.4 2.9h-2.3v7A10 10 0 0022 12z"/></svg></a>
+              <a href="https://www.instagram.com/texastechcu/" target="_blank" rel="noopener" aria-label="instagram" class="text-white hover:text-white/80 transition-fast"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+              <a href="https://twitter.com/TexasTechCU" target="_blank" rel="noopener" aria-label="x" class="text-white hover:text-white/80 transition-fast"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.1 8.1L23 22h-6.6l-5.2-6.8L5.3 22H2.2l7.6-8.7L1.5 2h6.8l4.7 6.2L18.9 2zm-1.2 18h1.8L7.1 3.8H5.2L17.7 20z"/></svg></a>
+              <a href="https://www.linkedin.com/company/TexasTechCU" target="_blank" rel="noopener" aria-label="linkedin" class="text-white hover:text-white/80 transition-fast"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 6.5a2 2 0 11-4 0 2 2 0 014 0zM3.2 8.9h3.5V21H3.2V8.9zM9.3 8.9h3.4v1.7h.05c.47-.85 1.6-1.75 3.3-1.75 3.5 0 4.15 2.3 4.15 5.3V21h-3.5v-5.3c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9.3V8.9z"/></svg></a>
+              <a href="https://www.youtube.com/texastechcu" target="_blank" rel="noopener" aria-label="youtube" class="text-white hover:text-white/80 transition-fast"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 00-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 001.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 001.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 001.8-1.8C23 15.2 23 12 23 12zM9.8 15.1V8.9l5.3 3.1-5.3 3.1z"/></svg></a>
+              <a href="https://www.tiktok.com/@texastechcu" target="_blank" rel="noopener" aria-label="tiktok" class="text-white hover:text-white/80 transition-fast"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 2c.4 2.3 1.7 3.9 4 4.2v2.8c-1.5.1-2.9-.4-4-1.2v6.6c0 3.6-2.6 6-5.9 5.6-2.7-.3-4.8-2.6-4.7-5.4.1-2.9 2.5-5.1 5.4-5 .3 0 .6 0 .9.1v3c-.3-.1-.6-.2-1-.2-1.3 0-2.4 1.1-2.3 2.4 0 1.3 1.1 2.3 2.4 2.3 1.3 0 2.2-1 2.2-2.4V2h2.6z"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social (mobile) -->
+        <div class="lg:hidden col-span-2">
+          <p class="text-[12px] tracking-[0.72px] uppercase text-[#8a8a8a] mb-[14px]">Follow Us</p>
+          <div class="flex flex-wrap items-center gap-3">
+            <a href="https://www.facebook.com/TexasTechCU" target="_blank" rel="noopener" aria-label="facebook" class="text-white"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.5V12h2.7l-.4 2.9h-2.3v7A10 10 0 0022 12z"/></svg></a>
+            <a href="https://www.instagram.com/texastechcu/" target="_blank" rel="noopener" aria-label="instagram" class="text-white"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://twitter.com/TexasTechCU" target="_blank" rel="noopener" aria-label="x" class="text-white"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.1 8.1L23 22h-6.6l-5.2-6.8L5.3 22H2.2l7.6-8.7L1.5 2h6.8l4.7 6.2L18.9 2zm-1.2 18h1.8L7.1 3.8H5.2L17.7 20z"/></svg></a>
+            <a href="https://www.linkedin.com/company/TexasTechCU" target="_blank" rel="noopener" aria-label="linkedin" class="text-white"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 6.5a2 2 0 11-4 0 2 2 0 014 0zM3.2 8.9h3.5V21H3.2V8.9zM9.3 8.9h3.4v1.7h.05c.47-.85 1.6-1.75 3.3-1.75 3.5 0 4.15 2.3 4.15 5.3V21h-3.5v-5.3c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9.3V8.9z"/></svg></a>
+            <a href="https://www.youtube.com/texastechcu" target="_blank" rel="noopener" aria-label="youtube" class="text-white"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 00-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 001.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 001.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 001.8-1.8C23 15.2 23 12 23 12zM9.8 15.1V8.9l5.3 3.1-5.3 3.1z"/></svg></a>
+            <a href="https://www.tiktok.com/@texastechcu" target="_blank" rel="noopener" aria-label="tiktok" class="text-white"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 2c.4 2.3 1.7 3.9 4 4.2v2.8c-1.5.1-2.9-.4-4-1.2v6.6c0 3.6-2.6 6-5.9 5.6-2.7-.3-4.8-2.6-4.7-5.4.1-2.9 2.5-5.1 5.4-5 .3 0 .6 0 .9.1v3c-.3-.1-.6-.2-1-.2-1.3 0-2.4 1.1-2.3 2.4 0 1.3 1.1 2.3 2.4 2.3 1.3 0 2.2-1 2.2-2.4V2h2.6z"/></svg></a>
+          </div>
         </div>
 
       </div>
-    </div>
-  </div>
 
-  <div class="footer-bottom">
-    <div class="container">
-      <div class="footer-bottom-inner">
-        <p>Copyright &copy; 2026 Texas Tech Credit Union. All Rights Reserved.&nbsp;&nbsp;|&nbsp;&nbsp;Equal Housing Lender&nbsp;&nbsp;|&nbsp;&nbsp;Federally insured by NCUA</p>
-        <div class="footer-legal">
-          <a href="https://www.texastechfcu.org/privacy-policy">Privacy Policy</a>
-          <a href="https://www.texastechfcu.org/terms-of-use">Terms of Use</a>
+      <!-- Copyright / Legal -->
+      <div class="border-0 lg:border-t border-white/10 mt-[35px] lg:mt-[53px] pt-0 lg:pt-[33px] text-center">
+        <div class="text-[11px] lg:text-[12px] text-[#8a8a8a] lg:text-white font-light leading-[1.73] mb-2 lg:mb-[1px]">
+          Copyright &copy; 2026 Texas Tech Credit Union. All Rights Reserved.
+          <span class="hidden lg:inline">&nbsp;|&nbsp;</span>
+          <span class="block mt-2 lg:mt-0 lg:inline">Equal Housing Lender | Federally insured by NCUA | <a href="https://www.texastechfcu.org/privacy-policy?hsLang=en" class="underline underline-offset-2">Privacy Policy</a> | <a href="https://www.texastechfcu.org/terms-of-use?hsLang=en" class="underline underline-offset-2">Terms of Use</a></span>
         </div>
+        <p class="text-[11px] lg:text-[12px] text-[#8a8a8a] lg:text-white/50 font-light leading-[1.73]">Links to external websites are provided for convenience. Texas Tech Credit Union is not responsible for their content, links, privacy, or security policies.</p>
       </div>
-    </div>
-  </div>
 
-  <div class="footer-disc">
-    <div class="container">
-      <p>Links to external websites are provided for convenience. Texas Tech Credit Union is not responsible for their content, links, privacy, or security policies.</p>
     </div>
   </div>
 </footer>
 
-<!-- ============================================================
-     JAVASCRIPT
-============================================================ -->
-<script>
-  // Mobile nav toggle
-  const hamBtn  = document.getElementById('hamBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamBtn.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.toggle('open');
-    hamBtn.classList.toggle('open', isOpen);
-    hamBtn.setAttribute('aria-expanded', isOpen);
-  });
 
-  // Responsive iframe height adjustment
-  function setIframeHeight() {
-    const iframe = document.getElementById('helocIframe');
-    if (!iframe) return;
-    const w = window.innerWidth;
-    if (w <= 640)       iframe.style.height = '4200px';
-    else if (w <= 768)  iframe.style.height = '3600px';
-    else if (w <= 1024) iframe.style.height = '3100px';
-    else                iframe.style.height = '2900px';
+<!-- ═══════════════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════════════ -->
+<script>
+  // ── Scroll-reveal (IntersectionObserver) ─────────────────
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.revealDelay || entry.target.style.getPropertyValue('--reveal-delay') || '0ms';
+        setTimeout(() => entry.target.classList.add('is-visible'), parseInt(delay) || 0);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+  // ── Parallax on hero stack ────────────────────────────────
+  const heroStack = document.querySelector('.mtg-hero__stack');
+  if (heroStack) {
+    const factor = parseFloat(heroStack.dataset.parallax || '-0.05');
+    window.addEventListener('scroll', () => {
+      heroStack.style.transform = `translate3d(0px,${window.scrollY * factor}px,0px)`;
+    }, { passive: true });
   }
-  setIframeHeight();
-  window.addEventListener('resize', setIframeHeight);
+
+  // ── Responsive iframe height ──────────────────────────────
+  function resizeIframe() {
+    const f = document.getElementById('helocIframe');
+    if (!f) return;
+    const w = window.innerWidth;
+    if (w <= 480)       f.style.height = '4600px';
+    else if (w <= 640)  f.style.height = '4200px';
+    else if (w <= 768)  f.style.height = '3600px';
+    else if (w <= 1024) f.style.height = '3100px';
+    else                f.style.height = '2900px';
+  }
+  resizeIframe();
+  window.addEventListener('resize', resizeIframe);
 </script>
 
 </body>
